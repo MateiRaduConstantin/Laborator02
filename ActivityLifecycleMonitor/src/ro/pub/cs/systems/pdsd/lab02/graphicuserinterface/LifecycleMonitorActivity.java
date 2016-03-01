@@ -1,6 +1,7 @@
 package ro.pub.cs.systems.pdsd.lab02.graphicuserinterface;
 
 import ro.pub.cs.systems.pdsd.lab02.R;
+import ro.pub.cs.systems.pdsd.lab02.R.id;
 import ro.pub.cs.systems.pdsd.lab02.general.Constants;
 import ro.pub.cs.systems.pdsd.lab02.general.Utilities;
 import android.app.Activity;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 
@@ -74,14 +76,81 @@ public class LifecycleMonitorActivity extends Activity {
         okButton.setOnClickListener(buttonClickListener);
         Button cancelButton = (Button)findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(buttonClickListener);
-        Log.d(Constants.TAG, "onCreate() method was invoked");
+        EditText userN;
+    	EditText pass;
+    	userN = (EditText)findViewById(id.username_edit_text);
+		pass = (EditText)findViewById(id.password_edit_text);
+    	if (savedInstanceState != null){
+    		userN.setText(savedInstanceState.getString("user")); 
+    		pass.setText(savedInstanceState.getString("password"));
+    		
+    	}
+        if (savedInstanceState == null)
+        	Log.d(Constants.TAG, "onCreate() method was invoked");
+        else
+        	Log.d(Constants.TAG, "onCreate() method was REINVOKED");
     }    
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	Log.d(Constants.TAG, "so apelat onStart() bre");
+    }
+    @Override
+    protected void onRestart() {
+    	super.onRestart();
+    	Log.d(Constants.TAG, "so apelat onRestart() bre");
+    }
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	Log.d(Constants.TAG, "so apelat onResume() bre");
+    }
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    	Log.d(Constants.TAG, "so apelat onStop() bre");
+    }
+    @Override
+    protected void onDestroy() {
+    	super.onDestroy();
+    	Log.d(Constants.TAG, "so apelat onDestroy() bre");
+    }
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	Log.d(Constants.TAG, "so apelat onPause() bre");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+    
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+    	CheckBox chBox = (CheckBox)findViewById(R.id.remember_me_checkbox);
+    	EditText userN;
+    	EditText pass;
+    	if (chBox.isChecked()){
+    		userN = (EditText)findViewById(id.username_edit_text);
+    		pass = (EditText)findViewById(id.password_edit_text);
+    		savedInstanceState.putString("user", userN.getText().toString());
+    		savedInstanceState.putString("password", pass.getText().toString());
+    	}
+    }
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    	//CheckBox chBox = (CheckBox)findViewById(R.id.remember_me_checkbox);
+//    	EditText userN;
+//    	EditText pass;
+//    	userN = (EditText)findViewById(id.username_edit_text);
+//		pass = (EditText)findViewById(id.password_edit_text);
+//    	if (savedInstanceState != null){
+//    		userN.setText(savedInstanceState.getString("user")); 
+//    		pass.setText(savedInstanceState.getString("password"));
+//    		
+//    	}
     }
 
     @Override
